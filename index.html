@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive Hero</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      height: 100vh;
+      background: linear-gradient(135deg, #111, #1e1e1e);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero h2 {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      color: #ddd;
+      min-height: 24px;
+    }
+
+    .hero button {
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      background: #ff416c;
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+    }
+
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      font-size: 1.5rem;
+      opacity: 0.7;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(10px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero h2 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>Hello, I'm Naween</h1>
+    <h2 id="typing-text"></h2>
+    <button onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">
+      Explore My Work
+    </button>
+    <div class="scroll-down">⬇</div>
+  </section>
+
+  <!-- Example next section -->
+  <section id="about" style="height: 100vh; background: #fff; padding: 50px; text-align: center;">
+    <h2 style="color:#111">About Me</h2>
+    <p style="color:#444">This is the next section of the website.</p>
+  </section>
+
+  <script>
+    const textElement = document.getElementById("typing-text");
+    const textArray = [
+      "Graphic Designer",
+      "Creative Thinker",
+      "Web Developer",
+      "Freelancer"
+    ];
+    let textIndex = 0;
+    let charIndex = 0;
+
+    function typeText() {
+      if (charIndex < textArray[textIndex].length) {
+        textElement.textContent += textArray[textIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeText, 100);
+      } else {
+        setTimeout(eraseText, 2000);
+      }
+    }
+
+    function eraseText() {
+      if (charIndex > 0) {
+        textElement.textContent = textArray[textIndex].substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(eraseText, 50);
+      } else {
+        textIndex = (textIndex + 1) % textArray.length;
+        setTimeout(typeText, 500);
+      }
+    }
+
+    // Start animation
+    document.addEventListener("DOMContentLoaded", () => {
+      typeText();
+    });
+  </script>
+
+</body>
+</html>
